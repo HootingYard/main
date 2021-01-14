@@ -4,3 +4,6 @@
 [submodule "analysis"]
 	path = analysis
 	url = https://github.com/HootingYard/analysis.git
+[submodule "keyml"]
+	path = keyml
+	url = https://github.com/HootingYard/keyml.git
