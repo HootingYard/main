@@ -3,7 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/analysis" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/archive_management" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/keyml" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ubercoordinator" vcs="Git" />
   </component>
 </project>
