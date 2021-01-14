@@ -33,4 +33,5 @@ jobs:
         run: |
           cd ubercoordinator
           pip install -r requirements.txt
-          pip install -e .
+          python setup.py develop
+
