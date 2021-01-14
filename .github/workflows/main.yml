@@ -32,5 +32,4 @@ jobs:
       - name: Build the ubercoordinator code
         run: |
           cd ubercoordinator
-          ls -al
           pip install -e .
