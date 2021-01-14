@@ -7,3 +7,6 @@
 [submodule "keyml"]
 	path = keyml
 	url = https://github.com/HootingYard/keyml.git
+[submodule "ubercoordinator"]
+	path = ubercoordinator
+	url = https://github.com/HootingYard/ubercoordinator.git
