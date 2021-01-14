@@ -3,4 +3,7 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="fhdcaxvd" />
   </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" project-jdk-name="14" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
 </project>
