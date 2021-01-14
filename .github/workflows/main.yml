@@ -33,4 +33,4 @@ jobs:
         run: |
           cd archive_management
           ls -al
-          pip install -e .
+          pip install -e src
