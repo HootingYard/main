@@ -1,6 +1,3 @@
 [submodule "archive_management"]
 	path = archive_management
-	url = git@github.com:HootingYard/archive_management.git
-[submodule "keyml"]
-	path = keyml
-	url = git@github.com:HootingYard/keyml.git
+	url = https://github.com/HootingYard/archive_management.git

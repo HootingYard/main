@@ -1,2 +1,2 @@
-# maim
-Maim repository for hooting yard
+# main
+Main repository for hooting yard
