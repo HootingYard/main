@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Update python components
-        run: python -m pip install pip --upgrade
+        run: python -m pip install pip setuptools --upgrade
       - name: Build the ubercoordinator code
         run: |
           cd
