@@ -1,6 +1,3 @@
-[submodule "archive_management"]
-	path = archive_management
-	url = https://github.com/HootingYard/archive_management.git
 [submodule "analysis"]
 	path = analysis
 	url = https://github.com/HootingYard/analysis.git
