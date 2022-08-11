@@ -7,3 +7,6 @@
 [submodule "ubercoordinator"]
 	path = ubercoordinator
 	url = https://github.com/HootingYard/ubercoordinator.git
+[submodule "archive_management"]
+	path = archive_management
+	url = git@github.com:HootingYard/archive_management.git
