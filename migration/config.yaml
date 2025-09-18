@@ -1,0 +1,54 @@
+# Hooting Yard Migration Tool Configuration
+
+archive_org:
+  collection_url: https://archive.org/details/hooting-yard
+  collection_name: hooting-yard
+  max_parallel_downloads: 3
+  retry_attempts: 3
+  retry_delay: 5
+  timeout: 30
+  chunk_size: 8192
+  verify_checksums: true
+
+conversion:
+  cover_image: assets/hooting-yard-cover.jpg
+  video_resolution: 1920x1080
+  video_codec: libx264
+  audio_codec: aac
+  audio_bitrate: 192k
+  fps: 30
+  preset: medium
+  crf: 23
+  max_parallel: 2
+  ffmpeg_path: ffmpeg
+
+youtube:
+  client_secret_file: credentials/client_secret.json
+  token_file: credentials/token.json
+  start_date: "2025-10-01T10:00:00Z"
+  interval_days: 7
+  category: Entertainment
+  default_tags:
+    - Hooting Yard
+    - Frank Key
+    - Spoken Word
+    - Radio Show
+    - British Comedy
+  uploads_per_day: 5
+  chunk_size: 52428800  # 50MB
+
+paths:
+  downloads: ./downloads
+  rendered: ./rendered
+  processed: ./state  # State files are stored here
+  logs: ./logs
+  temp: ./temp
+
+state:
+  database_file: state.db
+  auto_resume: true
+  max_retries:
+    download: 3
+    conversion: 2
+    upload: 3
+  retry_delay: 300

@@ -18,6 +18,7 @@ from hooting_yard_migration import (
     StateManager,
 )
 from hooting_yard_migration.utils.logging import setup_logging
+from hooting_yard_migration.keyword_analysis import analyze_keywords
 
 console = Console()
 
@@ -313,6 +314,34 @@ def verify(ctx: click.Context) -> None:
             console.print(f"  - {error}")
     else:
         console.print("✅ All files verified successfully")
+
+
+@cli.command()
+@click.pass_context
+def keywords(ctx: click.Context) -> None:
+    """Analyze word frequencies across all episodes for keyword extraction."""
+    config: Config = ctx.obj["config"]
+
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        console=console,
+    ) as progress:
+        task = progress.add_task("Analyzing keyword frequencies...", total=None)
+
+        try:
+            keywords_file = analyze_keywords(str(config.paths.processed))
+            progress.update(task, completed=True)
+
+            if keywords_file:
+                console.print(f"✅ Keyword analysis complete")
+                console.print(f"📁 Results saved to: {keywords_file}")
+            else:
+                console.print("❌ No episodes found for keyword analysis")
+
+        except Exception as e:
+            console.print(f"❌ Keyword analysis failed: {e}")
+            raise
 
 
 def main() -> None:

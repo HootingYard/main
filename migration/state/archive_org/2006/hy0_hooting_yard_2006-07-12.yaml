@@ -1,0 +1,25 @@
+identifier: hy0_hooting_yard_2006-07-12
+title: 'Hooting Yard On The Air: Hooting Yard 2006-07-12'
+date: '2006-07-12T00:00:00'
+collection:
+- hooting-yard
+- podcasts
+creator: Frank Key
+description: ''
+full_text: null
+mp3:
+  filename: hooting_yard_2006-07-12.mp3
+  size: 42250539
+  duration: 1760.39
+  md5: 52cd64426a725ccf2f525af56384dde1
+text_content:
+  transcript_text: null
+  transcript_filename: null
+  subject_tags: []
+  language: en
+discovery:
+  discovered_at: '2025-09-19T00:37:47.333337'
+  last_checked: '2025-09-19T00:37:47.333317'
+status:
+  available: true
+  download_url: https://archive.org/download/hy0_hooting_yard_2006-07-12/hooting_yard_2006-07-12.mp3

@@ -218,6 +218,30 @@ Logs are written to `logs/` directory:
 
 Please follow the existing code style and add tests for new features.
 
+### Testing Requirements
+
+- **All functions must have unit tests** in the appropriate location under `tests/`
+- Use **pytest style tests** rather than Python's built-in unittest framework
+- Test files should follow the pattern `test_*.py` and match the module structure
+- Tests should cover normal operation, edge cases, and error conditions
+- Use mocking for external dependencies (Archive.org API, file system, etc.)
+
+Example test structure:
+```python
+# tests/test_scan_archive_dot_org_episodes.py
+import pytest
+from unittest.mock import Mock, patch
+
+def test_scanner_initialization():
+    """Test that scanner initializes with default values."""
+    scanner = ArchiveOrgScanner()
+    assert scanner.rate_limit_delay == 1.0
+
+def test_scan_episodes_with_mock_client():
+    """Test scanning episodes with mocked client."""
+    # Test implementation here
+```
+
 ## License
 
 See LICENSE file in the main repository.

@@ -45,7 +45,7 @@ SAMPLE_METADATA = {
         "date": "2004-04-14T00:00:00Z",
         "description": "Test episode description",
         "mediatype": "audio",
-        "title": "Hooting Yard On The Air: Test Episode",
+        "title": "Hooting Yard On The Air: Burnt Maps",
     },
 }
 
@@ -82,8 +82,8 @@ class TestEpisodeDownloader:
             # Update the MD5 in our mock episode
             episode.files[0].md5 = test_md5
 
-            # Mock the URL download
-            with patch("urllib.request.urlopen") as mock_urlopen:
+            # Mock the URL download - patch where it's used
+            with patch("hooting_yard_migration.retrieval.downloader.urlopen") as mock_urlopen:
                 mock_response = MagicMock()
                 mock_response.read.side_effect = [test_content, b""]  # Return content then EOF
                 mock_response.headers.get.return_value = str(len(test_content))
@@ -101,7 +101,7 @@ class TestEpisodeDownloader:
             # Verify result
             assert result.success is True
             assert result.episode_identifier == "hy0_hooting_yard_2004-04-14"
-            assert result.metadata.title == "Hooting Yard On The Air: Test Episode"
+            assert result.metadata.title == "Hooting Yard On The Air: Burnt Maps"
             assert result.file_path is not None
             assert result.file_path.exists()
             assert result.file_path.name == "hooting_yard_2004-04-14.mp3"
@@ -141,7 +141,7 @@ class TestEpisodeDownloader:
             test_content = b"Test MP3 content"
             episode.files[0].md5 = hashlib.md5(test_content).hexdigest()
 
-            with patch("urllib.request.urlopen") as mock_urlopen:
+            with patch("hooting_yard_migration.retrieval.downloader.urlopen") as mock_urlopen:
                 mock_response = MagicMock()
                 mock_response.read.side_effect = [test_content, b""]
                 mock_response.headers.get.return_value = str(len(test_content))
@@ -213,7 +213,7 @@ class TestEpisodeDownloader:
 
             test_content = b"Test content"
 
-            with patch("urllib.request.urlopen") as mock_urlopen:
+            with patch("hooting_yard_migration.retrieval.downloader.urlopen") as mock_urlopen:
                 mock_response = MagicMock()
                 mock_response.read.side_effect = [test_content, b""]
                 mock_response.headers.get.return_value = str(len(test_content))
@@ -257,13 +257,14 @@ class TestEpisodeDownloader:
             chunk2 = b"Part 2 of content"
             full_content = chunk1 + chunk2
             episode.files[0].md5 = hashlib.md5(full_content).hexdigest()
+            episode.files[0].size = len(full_content)  # Update size to match test data
 
             progress_updates = []
 
             def progress_callback(downloaded, total):
                 progress_updates.append((downloaded, total))
 
-            with patch("urllib.request.urlopen") as mock_urlopen:
+            with patch("hooting_yard_migration.retrieval.downloader.urlopen") as mock_urlopen:
                 mock_response = MagicMock()
                 mock_response.read.side_effect = [chunk1, chunk2, b""]
                 mock_response.headers.get.return_value = str(len(full_content))
@@ -329,7 +330,7 @@ class TestArchiveOrgClient:
 
     def test_get_episode_metadata(self):
         """Test fetching episode metadata."""
-        with patch("urllib.request.urlopen") as mock_urlopen:
+        with patch("hooting_yard_migration.retrieval.client.urlopen") as mock_urlopen:
             mock_response = MagicMock()
             mock_response.read.return_value = json.dumps(SAMPLE_METADATA).encode()
             mock_response.__enter__.return_value = mock_response
@@ -340,7 +341,7 @@ class TestArchiveOrgClient:
             episode = client.get_episode_metadata("hy0_hooting_yard_2004-04-14")
 
             assert episode.identifier == "hy0_hooting_yard_2004-04-14"
-            assert episode.metadata.title == "Hooting Yard On The Air: Test Episode"
+            assert episode.metadata.title == "Hooting Yard On The Air: Burnt Maps"
             assert episode.metadata.creator == "Frank Key"
             assert len(episode.files) == 2
             assert episode.mp3_file is not None
@@ -362,7 +363,7 @@ class TestArchiveOrgClient:
             }
         }
 
-        with patch("urllib.request.urlopen") as mock_urlopen:
+        with patch("hooting_yard_migration.retrieval.client.urlopen") as mock_urlopen:
             mock_response = MagicMock()
             mock_response.read.return_value = json.dumps(search_response).encode()
             mock_response.__enter__.return_value = mock_response
