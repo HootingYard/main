@@ -40,7 +40,7 @@ def cli(ctx: click.Context, config: Path, verbose: bool) -> None:
 
     # Load configuration
     cfg = Config.from_yaml(config)
-    cfg = Config.from_env()  # Override with env vars
+    # Note: Not using Config.from_env() to avoid overriding YAML config
     cfg.ensure_directories()
 
     # Store in context
@@ -330,6 +330,7 @@ def keywords(ctx: click.Context) -> None:
         task = progress.add_task("Analyzing keyword frequencies...", total=None)
 
         try:
+            # Config now automatically resolves paths relative to config.yaml
             keywords_file = analyze_keywords(str(config.paths.processed))
             progress.update(task, completed=True)
 

@@ -79,22 +79,56 @@ class StateConfig(BaseModel):
 class Config(BaseModel):
     """Main configuration class."""
 
+    model_config = {"arbitrary_types_allowed": True}
+
     archive_org: ArchiveOrgConfig = Field(default_factory=ArchiveOrgConfig)
     conversion: ConversionConfig = Field(default_factory=ConversionConfig)
     youtube: YouTubeConfig = Field(default_factory=YouTubeConfig)
     paths: PathsConfig = Field(default_factory=PathsConfig)
     state: StateConfig = Field(default_factory=StateConfig)
 
+    # Internal field to track the config file's directory
+    _config_root: Optional[Path] = None
+
     @classmethod
     def from_yaml(cls, path: Path) -> "Config":
         """Load configuration from YAML file."""
+        config_root = path.parent.resolve()
+
         if not path.exists():
-            return cls()
+            config = cls()
+        else:
+            with open(path, "r") as f:
+                data = yaml.safe_load(f)
+            config = cls(**data) if data else cls()
 
-        with open(path, "r") as f:
-            data = yaml.safe_load(f)
+        # Store the config root and resolve all relative paths
+        config._config_root = config_root
+        config._resolve_paths()
+        return config
 
-        return cls(**data) if data else cls()
+    def _resolve_paths(self) -> None:
+        """Resolve all relative paths to be relative to the config file directory."""
+        if self._config_root is None:
+            return
+
+        # Resolve all paths in PathsConfig relative to config root
+        for field_name in ["downloads", "rendered", "processed", "logs", "temp"]:
+            current_path = getattr(self.paths, field_name)
+            if not current_path.is_absolute():
+                resolved_path = (self._config_root / current_path).resolve()
+                setattr(self.paths, field_name, resolved_path)
+
+        # Resolve conversion paths
+        if not self.conversion.cover_image.is_absolute():
+            self.conversion.cover_image = (self._config_root / self.conversion.cover_image).resolve()
+
+        # Resolve YouTube credential paths
+        if not self.youtube.client_secret_file.is_absolute():
+            self.youtube.client_secret_file = (self._config_root / self.youtube.client_secret_file).resolve()
+
+        if not self.youtube.token_file.is_absolute():
+            self.youtube.token_file = (self._config_root / self.youtube.token_file).resolve()
 
     @classmethod
     def from_env(cls) -> "Config":
