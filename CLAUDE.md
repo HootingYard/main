@@ -79,3 +79,57 @@ Uses Mako templates located in `ubercoordinator/templates/website/` for generati
 ### External Tools
 - FFmpeg: Required for audio/video processing (see docs/archive_org_to_youtube_migration.md)
 - Git: For submodule management
+
+## Developer Diary
+
+All projects should maintain a developer diary in `<project_root>/diary/` to track progress, decisions, and learnings.
+
+### Diary Structure
+- **Location**: `<project_root>/diary/`
+- **Format**: One markdown file per significant work session or day
+- **Naming Convention**: `YYYY-MM-DD_brief-description.md`
+
+### Entry Template
+Each diary entry should follow this structure:
+
+```markdown
+# Development Diary Entry - YYYY-MM-DD
+
+## Context
+- **Date**: YYYY-MM-DD HH:MM UTC
+- **Branch**: branch-name
+- **Commit**: short-hash
+- **Contributors**: Claude Code + User
+
+## Problem Statement
+What problem were we trying to solve? What was the user's request?
+
+## Our Approach
+What was our intended solution? What strategy did we take?
+
+## Implementation
+What specific changes did we make? Key files modified, features added, etc.
+
+## Outcomes
+- What worked well?
+- What challenges did we encounter?
+- How did we overcome difficulties?
+- What did we learn?
+
+## Next Steps
+What remains to be done? What should we tackle next?
+```
+
+### When to Create Entries
+- After completing significant features or architectural changes
+- When solving challenging problems or learning something important
+- Before/after major commits or releases
+- When making decisions that affect project direction
+- After troubleshooting difficult bugs
+
+### Benefits
+- Provides context for future development work
+- Documents decision-making process and rationale
+- Helps onboard new contributors to the project
+- Creates searchable project history and institutional knowledge
+- Enables better project management and progress tracking
